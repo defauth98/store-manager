@@ -3,7 +3,7 @@ const mongoConnection = require('./connection');
 
 module.exports = {
   async create(name, quantity) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const productCollection = await db.collection('products');
 
     const newProduct = await productCollection.insertOne({ name, quantity });
@@ -12,7 +12,8 @@ module.exports = {
   },
 
   async findAll() {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
+
     const productCollection = await db.collection('products');
 
     const products = await productCollection.find({}).toArray();
@@ -21,7 +22,7 @@ module.exports = {
   },
 
   async findOne(name) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const productCollection = await db.collection('products');
 
     const product = await productCollection.findOne(name);
@@ -30,17 +31,17 @@ module.exports = {
   },
 
   async find(id) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const productCollection = await db.collection('products');
 
     const product = await productCollection
       .findOne({ _id: ObjectId(id) });
 
-    return product; 
+    return product;
   },
 
   async update(id, name, quantity) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const productCollection = await db.collection('products');
 
     await productCollection
@@ -54,7 +55,7 @@ module.exports = {
   },
 
   async delete(id) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const productCollection = await db.collection('products');
 
     const product = await productCollection
@@ -63,8 +64,8 @@ module.exports = {
     if (product) {
       await productCollection
       .deleteOne({ _id: ObjectId(id) });
-  
+
       return product;
     }
-  }, 
+  },
 };

@@ -41,8 +41,6 @@ describe("#salesModel", () => {
 
         const updatedProduct = await salesModel.update(sale.id);
 
-        console.log(updatedProduct);
-
         expect(updatedProduct).to.have.property("_id");
       })
     })

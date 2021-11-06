@@ -55,19 +55,19 @@ describe("#salesModel", () => {
         await salesModel.create(sales);
       })
 
-      it("return a array of products", async () => {
+      it("return a array of sales", async () => {
         const response = await salesModel.findAll();
 
         expect(response.length).equals(1)
       })
 
-      it('the product have an id', async () => {
+      it('the sale have an id', async () => {
         const response = await salesModel.findAll();
 
         expect(response[0]).to.have.property("_id");
       })
 
-      it('the product have name and quantity', async () => {
+      it('the sale have name and quantity', async () => {
         const response = await salesModel.findAll();
 
         expect(response[0]).to.have.property("_id");

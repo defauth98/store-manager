@@ -44,8 +44,8 @@ describe("#salesModel", () => {
       })
     })
 
-    describe("when have an product", () => {
-      it("return product", async () => {
+    describe("when have an sale", () => {
+      it("return sale", async () => {
         const sale = await salesModel.create(sales);
 
         const response = await salesModel.findOne(sale._id);

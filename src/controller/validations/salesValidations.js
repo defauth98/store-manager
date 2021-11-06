@@ -26,11 +26,11 @@ function productValidation(req, res, next) {
   if (sales[0]) {
     sales.forEach((sale) => {
       const { _id, quantity } = sale;
-  
-      const notValid = quantityMustBeANumber(quantity) 
+
+      const notValid = quantityMustBeANumber(quantity)
       || quantityMustBeGreateThenOne(quantity)
       || isValidId(_id);
-  
+
       if (notValid) {
         return res.status(422).json({ err: {
           code: 'invalid_data',
@@ -46,15 +46,15 @@ function productValidation(req, res, next) {
 async function saleExistsValidation(req, res, next) {
   const { id } = req.params;
 
-  const db = await mongoConnection();
+  const db = await mongoConnection.getConnection();
   const salesCollection = await db.collection('sales');
 
   let sale = null;
 
   if (ObjectId.isValid(id)) {
     sale = await salesCollection.findOne({ _id: ObjectId(id) });
-  } 
-  
+  }
+
   if (sale === null) {
     return res.status(404).json({
       err: {
@@ -70,15 +70,15 @@ async function saleExistsValidation(req, res, next) {
 async function saleExistsForDelete(req, res, next) {
   const { id } = req.params;
 
-  const db = await mongoConnection();
+  const db = await mongoConnection.getConnection();
   const salesCollection = await db.collection('sales');
 
   let sale = null;
 
   if (ObjectId.isValid(id)) {
     sale = await salesCollection.findOne({ _id: ObjectId(id) });
-  } 
-  
+  }
+
   if (sale === null) {
     return res.status(422).json({
       err: {

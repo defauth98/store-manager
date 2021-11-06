@@ -3,7 +3,7 @@ const mongoConnection = require('./connection');
 
 module.exports = {
   async create(sales) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     const insertedSaleId = await salesCollection.insertOne({ itensSold: sales });
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   async findAll() {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     const sales = await salesCollection.find({}).toArray();
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   async findOne(name) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     const sales = await salesCollection.findOne(name);
@@ -34,17 +34,17 @@ module.exports = {
   },
 
   async find(id) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     const sales = await salesCollection
       .findOne({ _id: ObjectId(id) });
 
-    return sales; 
+    return sales;
   },
 
   async update(id, itensSold) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     await salesCollection
@@ -59,7 +59,7 @@ module.exports = {
   },
 
   async delete(id) {
-    const db = await mongoConnection();
+    const db = await mongoConnection.getConnection();
     const salesCollection = await db.collection('sales');
 
     const sale = await salesCollection
@@ -68,8 +68,8 @@ module.exports = {
     if (sale) {
       await salesCollection
       .deleteOne({ _id: ObjectId(id) });
-  
+
       return sale;
     }
-  }, 
+  },
 };

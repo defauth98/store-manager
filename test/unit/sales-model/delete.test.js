@@ -36,7 +36,7 @@ describe("#salesModel", () => {
       }
     ]
 
-      it("return a id of deleted product", async () => {
+      it("return a id of deleted sale", async () => {
         const sale = await salesModel.create(sales);
 
         const response = await salesModel.delete(sale.id);
