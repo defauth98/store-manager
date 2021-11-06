@@ -24,7 +24,6 @@ describe("#productsModel", () => {
     sinon.stub(mongoConnection, 'getConnection').resolves(connectionMock);
   });
 
-  /* Restauraremos a função `getConnection` original após os testes. */
   after(() => {
     mongoConnection.getConnection.restore();
   });

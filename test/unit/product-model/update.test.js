@@ -28,30 +28,15 @@ describe("#productsModel", () => {
     mongoConnection.getConnection.restore();
   });
 
-  describe("findOne", () => {
-    const productName = {name: "Martelo do Thor"}
+  describe("update", () => {
+      it("returns a product", async () => {
+        const product = await productModel.create('Martelo Thor', 2)
 
+        const updatedProduct = await productModel.update(product._id, 'Martelo do Thor Dourado', 2);
 
-    describe("when no have product" , () => {
-      it("returns null", async () => {
-        const response = await productModel.findOne(productName);
-
-        expect(response).to.be.a("null");
+        expect(updatedProduct).to.have.property("_id");
+        expect(updatedProduct).to.have.property("name");
+        expect(updatedProduct).to.have.property("quantity");
       })
     })
-
-    describe("when have an product", () => {
-      before(async () => {
-        await productModel.create("Martelo do Thor", 1);
-      })
-
-      it("return product", async () => {
-        const response = await productModel.findOne(productName);
-
-        expect(response).to.have.property("_id");
-        expect(response).to.have.property("name");
-        expect(response).to.have.property("quantity");
-      })
-    })
-  })
 });
